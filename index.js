@@ -34,3 +34,5 @@ app.use("/api/users", users);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
+
+app.get('/', (req, res) => res.json('working'))
