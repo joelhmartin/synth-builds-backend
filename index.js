@@ -42,8 +42,8 @@ app.get('/', (req, res) => {
 });
 
 // HTTPS setup with self-signed certificate
-const privateKeyPath = './path/to/key.pem'; // Replace with the actual path to your key.pem
-const certificatePath = './path/to/cert.pem'; // Replace with the actual path to your cert.pem
+const privateKeyPath = './key.pem'; // Replace with the actual path to your key.pem
+const certificatePath = './cert.pem'; // Replace with the actual path to your cert.pem
 
 const privateKey = fs.readFileSync(privateKeyPath, 'utf8');
 const certificate = fs.readFileSync(certificatePath, 'utf8');
