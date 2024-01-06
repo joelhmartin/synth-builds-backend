@@ -5,13 +5,12 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const patches = require("./routes/patches");
 const users = require("./routes/users");
-const url = "mongodb://localhost/patches"; //Change this to /SynthSiteDB
+const url = "mongodb://localhost/patches"; // Change this to /SynthSiteDB
 require("dotenv").config({ path: "./config.env" });
 
 // MongoDB Atlas connection string
 const atlasConnectionString =
   `mongodb+srv://jmart163:${process.env.PASSWORD}@synth-builds.7vv4zqz.mongodb.net/?retryWrites=true&w=majority`;
-
 
 mongoose
   .connect(atlasConnectionString, {
@@ -19,11 +18,9 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log("Connected to MongoDB Atlas"))
-  .catch((err) => console.log(err));
+  .catch((err) => console.error("MongoDB connection error:", err));
 
-
-const port = process.env.PORT || 3000;
-
+const port = 3000;
 
 // Use cors middleware with default options
 app.use(cors());
@@ -33,6 +30,16 @@ app.use("/api/users", users);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+  console.log("MongoDB Atlas connection string:", atlasConnectionString);
 });
 
-app.get('/', (req, res) => res.json('working'))
+// Additional logging for route access
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  next();
+});
+
+app.get('/', (req, res) => {
+  console.log("GET / requested");
+  res.json('working');
+});
