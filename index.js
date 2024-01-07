@@ -1,6 +1,4 @@
 const express = require("express");
-const https = require("https");
-const fs = require("fs");
 const app = express();
 const router = express.Router();
 const cors = require("cors");
@@ -23,7 +21,7 @@ mongoose
 
 const port = 3000;
 
-const allowedOrigins = ['https://localhost:5173', 'https://synth-builds-oolyvawmh-joelhmartin.vercel.app/']
+const allowedOrigins = ['http://localhost:5173', 'https://synth-builds-7xpf3mb4j-joelhmartin.vercel.app/']
 // Use cors middleware with default options
 app.use(cors({
   origin: allowedOrigins,
@@ -31,10 +29,17 @@ app.use(cors({
   credentials: true,
 }));
 
+
+
 app.use(express.json());
 app.use("/api/patches", patches);
 app.use("/api/users", users);
 app.options('*', cors());
+
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
+  console.log("MongoDB Atlas connection string:", atlasConnectionString);
+});
 
 // Additional logging for route access
 app.use((req, res, next) => {
@@ -47,46 +52,4 @@ app.get('/', (req, res) => {
   res.json('working');
 });
 
-// Load SSL/TLS certificate and key
-const privateKey = fs.readFileSync('./key.pem', 'utf8');
-const certificate = fs.readFileSync('./cert.pem', 'utf8');
-const credentials = { key: privateKey, cert: certificate };
 
-// Create HTTPS server
-const httpsServer = https.createServer(credentials, app);
-
-// Start server
-httpsServer.listen(port, () => {
-  console.log(`Server running at https://localhost:${port}`);
-  console.log("MongoDB Atlas connection string:", atlasConnectionString);
-});
-
-
-
-
-
-/* For CONVERTING TO HTTPS
-// const express = require("express");
-// const fs = require("fs");
-// const app = express();
-// const cors = require("cors");
-
-// // Enable CORS for all routes
-// app.use(cors());
-
-// app.get("/api", (req, res) => {
-//   res.send({
-//     people: "butt",
-//   });
-// });
-
-
-// // Endpoint for serving the validation file
-// app.get(
-//   "/.well-known/pki-validation/A280604EFF8C1BCDC421B577EF7F3405.txt",
-//   (req, res) => {
-//     res.sendFile('/Users/bif/Documents/CODES/REACT/SynthBuilds/backend/A280604EFF8C1BCDC421B577EF7F3405.txt');
-//   }
-// );
-
-// app.listen(3000, () => console.log("Server listening on port 3000"));
