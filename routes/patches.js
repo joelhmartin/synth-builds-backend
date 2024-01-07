@@ -6,58 +6,48 @@ const upload = multer({ dest: "uploads/" }); // Set the destination folder for u
 const AWS = require("aws-sdk");
 const fs = require("fs");
 
-// router.get("/", async (req, res) => {
-//   console.log("books")
-//   try {
-//     // Check if there's a search query parameter
-//     const searchQuery = req.query
-//     console.log(searchQuery)
-//     let patches;
-
-//     const queryConditions = [];
-
-//     if (searchQuery.searchText) {
-//       queryConditions.push({
-//         $or: [
-//           { song: { $regex: searchQuery.searchText, $options: "i" } },
-//           { synth: { $regex: searchQuery.searchText, $options: "i" } },
-//           { genre: { $regex: searchQuery.searchText, $options: "i" } },
-//           { producer: { $regex: searchQuery.searchText, $options: "i" } },
-//           { description: { $regex: searchQuery.searchText, $options: "i" } },
-//         ],
-//       });
-//     }
-
-//     if (searchQuery.producer) {
-//       queryConditions.push({ producer: { $regex: searchQuery.producer, $options: "i" } });
-//     }
-
-//     if (searchQuery.genre) {
-//       queryConditions.push({ genre: { $regex: searchQuery.genre, $options: "i" } });
-//     }
-
-//     if (queryConditions.length > 0) {
-//       // If there are conditions, perform a $or query
-//       patches = await Patch.find({ $or: queryConditions });
-//     } else {
-//       // If no conditions, fetch all patches
-//       patches = await Patch.find();
-//     }
-
-//     res.send(patches);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Error fetching patches from the database.");
-//   }
-// });
-
 router.get("/", async (req, res) => {
-  console.log("books");
+
   try {
-    res.send("Backend is working fine!"); // Modify this line to return a simple string
+    // Check if there's a search query parameter
+    const searchQuery = req.query
+    console.log(searchQuery)
+    let patches;
+
+    const queryConditions = [];
+
+    if (searchQuery.searchText) {
+      queryConditions.push({
+        $or: [
+          { song: { $regex: searchQuery.searchText, $options: "i" } },
+          { synth: { $regex: searchQuery.searchText, $options: "i" } },
+          { genre: { $regex: searchQuery.searchText, $options: "i" } },
+          { producer: { $regex: searchQuery.searchText, $options: "i" } },
+          { description: { $regex: searchQuery.searchText, $options: "i" } },
+        ],
+      });
+    }
+
+    if (searchQuery.producer) {
+      queryConditions.push({ producer: { $regex: searchQuery.producer, $options: "i" } });
+    }
+
+    if (searchQuery.genre) {
+      queryConditions.push({ genre: { $regex: searchQuery.genre, $options: "i" } });
+    }
+
+    if (queryConditions.length > 0) {
+      // If there are conditions, perform a $or query
+      patches = await Patch.find({ $or: queryConditions });
+    } else {
+      // If no conditions, fetch all patches
+      patches = await Patch.find();
+    }
+
+    res.send(patches);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Error in the backend.");
+    res.status(500).send("Error fetching patches from the database.");
   }
 });
 
