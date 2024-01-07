@@ -33,7 +33,15 @@ app.use((req, res, next) => {
 });
 
 // Use cors middleware with default options
-app.use(cors());
+// const corsOptions = {
+//   origin: 'https://',
+//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//   credentials: true, // enable set cookie
+//   optionsSuccessStatus: 204,
+// };
+app.use(cors({ credentials: true }));
+
+
 app.use(express.json());
 app.use("/api/patches", patches);
 app.use("/api/users", users);
@@ -41,6 +49,8 @@ app.use("/api/users", users);
 const port = 3000;
 
 const httpsServer = https.createServer(credentials, app);
+
+
 
 httpsServer.listen(port, () => {
   console.log(`Server running at https://localhost:${port}`);
