@@ -33,13 +33,13 @@ app.use((req, res, next) => {
 });
 
 // Use cors middleware with default options
-// const corsOptions = {
-//   origin: 'https://',
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   credentials: true, // enable set cookie
-//   optionsSuccessStatus: 204,
-// };
-app.use(cors({ credentials: true }));
+const corsOptions = {
+  origin: 'https://localhost:5173/',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // enable set cookie
+  optionsSuccessStatus: 204,
+};
+app.use(cors({ options: corsOptions, credentials: true }));
 
 
 app.use(express.json());
