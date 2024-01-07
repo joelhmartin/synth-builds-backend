@@ -28,6 +28,8 @@ app.use(cors({
   credentials: true,
 }));
 
+
+
 app.use(express.json());
 app.use("/api/patches", patches);
 app.use("/api/users", users);
@@ -47,4 +49,14 @@ app.use((req, res, next) => {
 app.get('/', (req, res) => {
   console.log("GET / requested");
   res.json('working');
+});
+
+app.post('/test', (req, res) => {
+  console.log("POST /test requested");
+
+  // Log the data received in the request body
+  console.log("Request Body:", req.body);
+
+  // Respond with a simple message
+  res.json({ message: 'POST request received successfully!' });
 });
