@@ -9,7 +9,7 @@ require("dotenv").config({ path: "./config.env" });
 
 // MongoDB Atlas connection string
 const atlasConnectionString =
-  `mongodb+srv://jmart163:${process.env.PASSWORD}@synth-builds.7vv4zqz.mongodb.net/?retryWrites=true&w=majority`;
+  `mongodb+srv://jmart163:${process.env.PASSWORD}@synth-builds.7vv4zqz.mongodb.net/patches?retryWrites=true&w=majority`;
 
 mongoose
   .connect(atlasConnectionString, {
