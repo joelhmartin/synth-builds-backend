@@ -23,7 +23,7 @@ mongoose
 
 const port = 3000;
 
-const allowedOrigins = ['https://localhost:5173', 'https://synth-builds-7xpf3mb4j-joelhmartin.vercel.app/']
+const allowedOrigins = ['https://localhost:5173', 'https://synth-builds-oolyvawmh-joelhmartin.vercel.app/']
 // Use cors middleware with default options
 app.use(cors({
   origin: allowedOrigins,
