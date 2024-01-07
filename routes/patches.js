@@ -51,6 +51,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
+  console.log(await req.body)
   
   AWS.config.update({
     accessKeyId: process.env.KEY,

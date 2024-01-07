@@ -22,10 +22,16 @@ mongoose
 const port = 3000;
 
 // Use cors middleware with default options
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+}));
+
 app.use(express.json());
 app.use("/api/patches", patches);
 app.use("/api/users", users);
+app.options('*', cors());
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
