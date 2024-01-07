@@ -7,7 +7,6 @@ const AWS = require("aws-sdk");
 const fs = require("fs");
 
 router.get("/", async (req, res) => {
-
   try {
     // Check if there's a search query parameter
     const searchQuery = req.query
