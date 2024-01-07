@@ -9,8 +9,8 @@ const fs = require("fs");
 router.get("/", async (req, res) => {
   try {
     // Check if there's a search query parameter
-    const searchQuery = req.query
-    console.log(searchQuery)
+    const searchQuery = req.query;
+    console.log(searchQuery);
     let patches;
 
     const queryConditions = [];
@@ -28,11 +28,15 @@ router.get("/", async (req, res) => {
     }
 
     if (searchQuery.producer) {
-      queryConditions.push({ producer: { $regex: searchQuery.producer, $options: "i" } });
+      queryConditions.push({
+        producer: { $regex: searchQuery.producer, $options: "i" },
+      });
     }
 
     if (searchQuery.genre) {
-      queryConditions.push({ genre: { $regex: searchQuery.genre, $options: "i" } });
+      queryConditions.push({
+        genre: { $regex: searchQuery.genre, $options: "i" },
+      });
     }
 
     if (queryConditions.length > 0) {
@@ -51,8 +55,8 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", upload.single("image"), async (req, res) => {
-  console.log(await req.body)
-  
+  console.log(await req.body);
+
   AWS.config.update({
     accessKeyId: process.env.KEY,
     secretAccessKey: process.env.SECRET,
@@ -98,6 +102,7 @@ router.post("/", upload.single("image"), async (req, res) => {
     res.status(500).send("Error saving patch to the database.");
   }
 });
+
 
 router.delete("/:id", (req, res) => {
   if (!patch)

@@ -21,9 +21,10 @@ mongoose
 
 const port = 3000;
 
+const allowedOrigins = ['https://localhost:5173', 'https://synth-builds-7xpf3mb4j-joelhmartin.vercel.app/']
 // Use cors middleware with default options
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: allowedOrigins,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
 }));
@@ -51,12 +52,4 @@ app.get('/', (req, res) => {
   res.json('working');
 });
 
-app.post('/test', (req, res) => {
-  console.log("POST /test requested");
 
-  // Log the data received in the request body
-  console.log("Request Body:", req.body);
-
-  // Respond with a simple message
-  res.json({ message: 'POST request received successfully!' });
-});
